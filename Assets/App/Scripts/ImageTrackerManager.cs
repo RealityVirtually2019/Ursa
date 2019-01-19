@@ -4,60 +4,55 @@ using UnityEngine;
 using Vuforia;
 using UnityEngine.UI;
 
-public class ImageTrackerManager : MonoBehaviour, ITrackableEventHandler {
+[SerializeField]
+public class ImageTrackerIndividual
+{
+	public ImageTrackerConfig imageTracker;
+	public Text trackerText;
+}
 
-	public TrackableBehaviour cereal1Tracker;
 
-	public Text imageTrackerText;
+public class ImageTrackerManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+	public ImageTrackerConfig[] imageTrackers;
 
-		if (cereal1Tracker) 
+	public Text imageTrackerName;
+
+
+	void OnEnable()
+	{
+		foreach (var tracker in imageTrackers)
 		{
-			cereal1Tracker.RegisterTrackableEventHandler(this);
+			tracker.TrackingDetected += ChangeTrackerLabel;
 		}
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
-	public void OnTrackableStateChanged(
+	void OnDisable()
+	{
+		foreach (var tracker in imageTrackers)
+		{
+			tracker.TrackingDetected -= ChangeTrackerLabel;
+		}
+	}
 
-		TrackableBehaviour.Status previousStatus,
 
-		TrackableBehaviour.Status newStatus)
-
+	void ChangeTrackerLabel()
 	{
 
-		if (newStatus == TrackableBehaviour.Status.DETECTED ||
-
-			newStatus == TrackableBehaviour.Status.TRACKED ||
-
-			newStatus == TrackableBehaviour.Status.EXTENDED_TRACKED)
-
+		for (int i = 0; i < imageTrackers.Length; i++) 
 		{
+			if (imageTrackers[i].isTracked) 
+			{
+				//imageTrackerName.text = "a tracker is active";
 
-			// When target is found
-
-			imageTrackerText.text = "Cereal Found";
-
+				imageTrackerName.text = imageTrackers [i].trackerText;
+			}
 		}
-
-		else
-
-		{
-
-			// When target is lost
-
-			imageTrackerText.text = "Cereal NOT Found";
-
-		}
-
 	}
+
+
+
+
 
 
 }

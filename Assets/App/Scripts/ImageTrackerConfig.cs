@@ -3,12 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vuforia;
 using UnityEngine.UI;
+using System;
 
+[RequireComponent(typeof(TrackableBehaviour))]
 public class ImageTrackerConfig : MonoBehaviour, ITrackableEventHandler {
 
-	public TrackableBehaviour imageTracker;
+	public Action TrackingDetected;
+	public Action TrackingLost;
 
-	public Text imageTrackerText;
+	private TrackableBehaviour imageTracker;
+	public GameObject[] trackerObjects;
+	public string trackerText;
+
+	[HideInInspector]
+	public bool isTracked;
+
+	void Awake()
+	{
+		imageTracker = GetComponent<TrackableBehaviour> ();
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -43,7 +56,7 @@ public class ImageTrackerConfig : MonoBehaviour, ITrackableEventHandler {
 
 			// When target is found
 
-			imageTrackerText.text = "Cereal Found";
+			OnTrackingDetected ();
 
 		}
 
@@ -53,9 +66,53 @@ public class ImageTrackerConfig : MonoBehaviour, ITrackableEventHandler {
 
 			// When target is lost
 
-			imageTrackerText.text = "Cereal NOT Found";
+			OnTrackingLost ();
 
 		}
 
 	}
+
+
+	public void OnTrackingDetected()
+	{
+		isTracked = true;
+
+		ShowObjects ();
+
+		if (TrackingDetected != null)
+			TrackingDetected ();
+
+	}
+
+	public void OnTrackingLost()
+	{
+		isTracked = false;
+
+		HideObjects ();
+
+		if (TrackingLost != null)
+			TrackingLost ();
+
+
+	}
+
+	void ShowObjects()
+	{
+		foreach (var Go in trackerObjects) 
+		{
+			if (Go != null)
+				Go.SetActive (true);
+		}
+	}
+
+
+	void HideObjects()
+	{
+		foreach (var Go in trackerObjects) 
+		{
+			if (Go != null)
+				Go.SetActive (false);
+		}
+	}
+
 }
