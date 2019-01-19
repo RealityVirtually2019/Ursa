@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vuforia;
 using UnityEngine.UI;
+using System;
 
 public class ImageTrackerConfig : MonoBehaviour, ITrackableEventHandler {
 
-	public TrackableBehaviour imageTracker;
+	public Action TrackingDetected;
+	public Action TrackingLost;
 
-	public Text imageTrackerText;
+	public TrackableBehaviour imageTracker;
+	public GameObject[] trackerObjects;
+	public string trackerText;
+	public bool isTracked;
 
 	// Use this for initialization
 	void Start () {
@@ -43,7 +48,7 @@ public class ImageTrackerConfig : MonoBehaviour, ITrackableEventHandler {
 
 			// When target is found
 
-			imageTrackerText.text = "Cereal Found";
+			OnTrackingDetected ();
 
 		}
 
@@ -53,9 +58,31 @@ public class ImageTrackerConfig : MonoBehaviour, ITrackableEventHandler {
 
 			// When target is lost
 
-			imageTrackerText.text = "Cereal NOT Found";
+			OnTrackingLost ();
 
 		}
+
+	}
+
+
+	public void OnTrackingDetected()
+	{
+		isTracked = true;
+
+
+		if (TrackingDetected != null)
+			TrackingDetected ();
+
+	}
+
+	public void OnTrackingLost()
+	{
+		isTracked = false;
+
+
+		if (TrackingLost != null)
+			TrackingLost ();
+
 
 	}
 }
