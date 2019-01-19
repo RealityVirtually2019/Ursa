@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 public class SwipeDetector : MonoBehaviour
 {
+	public static Action SwipeUp;
+	public static Action SwipeDown;
+	public static Action SwipeLeft;
+	public static Action SwipeRight;
+
 	private Vector2 fingerDown;
 	private Vector2 fingerUp;
 	public bool detectSwipeOnlyAfterRelease = false;
@@ -98,6 +103,10 @@ public class SwipeDetector : MonoBehaviour
 		Debug.Log("Swipe UP");
 
 		swipeText.text = "Swipe Up";
+
+		if (SwipeUp != null)
+			SwipeUp ();
+
 	}
 
 	void OnSwipeDown()
@@ -105,6 +114,9 @@ public class SwipeDetector : MonoBehaviour
 		Debug.Log("Swipe Down");
 
 		swipeText.text = "Swipe Down";
+
+		if (SwipeDown != null)
+			SwipeDown ();
 
 	}
 
@@ -114,6 +126,10 @@ public class SwipeDetector : MonoBehaviour
 
 		swipeText.text = "Swipe Left";
 
+		if (SwipeLeft != null)
+			SwipeLeft ();
+		
+
 	}
 
 	void OnSwipeRight()
@@ -121,6 +137,9 @@ public class SwipeDetector : MonoBehaviour
 		Debug.Log("Swipe Right");
 
 		swipeText.text = "Swipe Right";
+
+		if (SwipeRight != null)
+			SwipeRight ();
 
 	}
 }
