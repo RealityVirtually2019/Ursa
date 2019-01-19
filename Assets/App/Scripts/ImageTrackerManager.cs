@@ -46,12 +46,6 @@ public class ImageTrackerManager : MonoBehaviour {
 				//imageTrackerName.text = "a tracker is active";
 
 				imageTrackerName.text = imageTrackers [i].trackerText;
-
-				foreach (var Go in imageTrackers[i].trackerObjects) 
-				{
-					if (Go != null)
-						Go.SetActive (true);
-				}
 			}
 		}
 	}

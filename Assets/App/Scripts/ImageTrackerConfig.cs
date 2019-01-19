@@ -5,15 +5,23 @@ using Vuforia;
 using UnityEngine.UI;
 using System;
 
+[RequireComponent(typeof(TrackableBehaviour))]
 public class ImageTrackerConfig : MonoBehaviour, ITrackableEventHandler {
 
 	public Action TrackingDetected;
 	public Action TrackingLost;
 
-	public TrackableBehaviour imageTracker;
+	private TrackableBehaviour imageTracker;
 	public GameObject[] trackerObjects;
 	public string trackerText;
+
+	[HideInInspector]
 	public bool isTracked;
+
+	void Awake()
+	{
+		imageTracker = GetComponent<TrackableBehaviour> ();
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -69,6 +77,7 @@ public class ImageTrackerConfig : MonoBehaviour, ITrackableEventHandler {
 	{
 		isTracked = true;
 
+		ShowObjects ();
 
 		if (TrackingDetected != null)
 			TrackingDetected ();
@@ -79,10 +88,31 @@ public class ImageTrackerConfig : MonoBehaviour, ITrackableEventHandler {
 	{
 		isTracked = false;
 
+		HideObjects ();
 
 		if (TrackingLost != null)
 			TrackingLost ();
 
 
 	}
+
+	void ShowObjects()
+	{
+		foreach (var Go in trackerObjects) 
+		{
+			if (Go != null)
+				Go.SetActive (true);
+		}
+	}
+
+
+	void HideObjects()
+	{
+		foreach (var Go in trackerObjects) 
+		{
+			if (Go != null)
+				Go.SetActive (false);
+		}
+	}
+
 }
