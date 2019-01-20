@@ -75,7 +75,7 @@ public class TouchManager : MonoBehaviour
 						if (gO.GetComponent<ImageTrackerConfig> () != null) 
 						{
 							//string text = gO.GetComponent<ImageTrackerConfig> ().trackerText;
-							raycastText.text = "Hit " + gO.GetComponent<ImageTrackerConfig>().trackerText;
+							raycastText.text = gO.GetComponent<ImageTrackerConfig>().trackerText;
 
                             infoPanelManager.ActivatePanel(raycastText.text);
 							infoPanelManager.InfoPanelShow ();
