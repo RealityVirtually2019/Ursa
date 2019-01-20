@@ -16,7 +16,9 @@ public class InformationPanelManager : MonoBehaviour {
 	public bool infoShow;
 	public bool infoHide = true;
 
-	//public Text yPos;
+	public Text yPos;
+	public Text panelNameText;
+
 
 	public Transform infoStartTransform;
 	public Transform infoEndTransform;
@@ -87,11 +89,14 @@ public class InformationPanelManager : MonoBehaviour {
 
     public void ActivatePanel(string name)
     {
+		panelNameText.text = name;
+
         foreach (var p in panels)
         {
-            if (p.panelName == name)
+            if (p != null && p.panelName == name)
             {
                 p.panelObj.SetActive(true);
+				panelNameText.text = p.panelName;
             }
             else
             {
