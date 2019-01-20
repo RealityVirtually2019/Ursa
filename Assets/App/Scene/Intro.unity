@@ -153,6 +153,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 20205657949284950, guid: c222a3e29f9d047c5af9fe4abd07bf19,
+        type: 2}
+      propertyPath: m_BackGroundColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20205657949284950, guid: c222a3e29f9d047c5af9fe4abd07bf19,
+        type: 2}
+      propertyPath: m_BackGroundColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20205657949284950, guid: c222a3e29f9d047c5af9fe4abd07bf19,
+        type: 2}
+      propertyPath: m_BackGroundColor.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c222a3e29f9d047c5af9fe4abd07bf19, type: 2}
   m_IsPrefabParent: 0
@@ -530,7 +545,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1216441366
 Transform:
   m_ObjectHideFlags: 0
@@ -572,7 +587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!328 &1484121221
 VideoPlayer:
   m_ObjectHideFlags: 0
