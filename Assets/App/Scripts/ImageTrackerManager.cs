@@ -19,12 +19,16 @@ public class ImageTrackerManager : MonoBehaviour {
 	public Text imageTrackerName;
 	public string currentTrackerName;
 
+	public GameObject viewFinder;
+	public InformationPanelManager infoPanelManger;
+
 
 	void OnEnable()
 	{
 		foreach (var tracker in imageTrackers)
 		{
 			tracker.TrackingDetected += ChangeTrackerLabel;
+			tracker.TrackingLost += EnableViewFinder;
 		}
 	}
 
@@ -33,12 +37,14 @@ public class ImageTrackerManager : MonoBehaviour {
 		foreach (var tracker in imageTrackers)
 		{
 			tracker.TrackingDetected -= ChangeTrackerLabel;
+			tracker.TrackingLost -= EnableViewFinder;
 		}
 	}
 
 
 	void ChangeTrackerLabel()
 	{
+		var trackerFound = false;
 
 		for (int i = 0; i < imageTrackers.Length; i++) 
 		{
@@ -50,14 +56,22 @@ public class ImageTrackerManager : MonoBehaviour {
 				currentTrackerName = imageTrackers [i].trackerText;
 
 				//SetCurrentTracked (imageTrackerName.text);
+
+				viewFinder.SetActive (false);
+				trackerFound = true;
 			}
+
 		}
+
+		if (!trackerFound)
+			viewFinder.SetActive (true);
 	}
 
 
-	void SetCurrentTracked(string trackerName)
+	void EnableViewFinder()
 	{
-		
+		if (!infoPanelManger.infoShow)
+			viewFinder.SetActive (true);
 	}
 		
 
