@@ -8,6 +8,8 @@ public class SimpleFollow : MonoBehaviour {
 
 	public float followSpeed;
 
+	//public bool followRotation
+
 	// Use this for initialization
 	void Start () {
 		
