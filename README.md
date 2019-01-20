@@ -7,6 +7,6 @@ Clone the project and open in unity.
 
 [Devpost project link](https://devpost.com/software/shopgood)
 
-[Project site](https://drive.google.com/drive/folders/1NJ2Ayw1NODv0Nhowl4DcI-e3-MaiN5Uv)
+[Project site](https://realityvirtually2019.github.io/shop-good-unity/)
 
 
