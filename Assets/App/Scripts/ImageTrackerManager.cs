@@ -17,6 +17,7 @@ public class ImageTrackerManager : MonoBehaviour {
 	public ImageTrackerConfig[] imageTrackers;
 
 	public Text imageTrackerName;
+	public string currentTrackerName;
 
 
 	void OnEnable()
@@ -46,10 +47,19 @@ public class ImageTrackerManager : MonoBehaviour {
 				//imageTrackerName.text = "a tracker is active";
 
 				imageTrackerName.text = imageTrackers [i].trackerText;
+				currentTrackerName = imageTrackers [i].trackerText;
+
+				//SetCurrentTracked (imageTrackerName.text);
 			}
 		}
 	}
 
+
+	void SetCurrentTracked(string trackerName)
+	{
+		
+	}
+		
 
 
 

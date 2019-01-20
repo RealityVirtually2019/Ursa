@@ -10,6 +10,9 @@ public class InformationPanelManager : MonoBehaviour {
 
 	public Text yPos;
 
+	public Transform infoUp;
+	public Transform infoDown;
+
 	void OnEnable()
 	{
 		SwipeDetector.SwipeDown += InfoPanelDown;
@@ -33,12 +36,14 @@ public class InformationPanelManager : MonoBehaviour {
 
 		if (swipeDown) 
 		{
-			transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, -1280, 0), Time.deltaTime * 1.5F);
+			transform.position = Vector3.Lerp(transform.position, infoDown.transform.position, Time.deltaTime * 1.5F);
+			//transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, -1280, 0), Time.deltaTime * 1.5F);
 		}
 
 		if (swipeUp) 
 		{
-			transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, 1280, 0), Time.deltaTime * 1.5F);
+			transform.position = Vector3.Lerp(transform.position, infoUp.transform.position, Time.deltaTime * 1.5F);
+			//transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, 1280, 0), Time.deltaTime * 1.5F);
 
 		}
 
@@ -47,14 +52,14 @@ public class InformationPanelManager : MonoBehaviour {
 		
 	}
 
-	void InfoPanelDown()
+	public void InfoPanelDown()
 	{
 		swipeDown = true;
 		swipeUp = false;
 		//transform.position = Vector3.Lerp(transform.position, new Vector3(0, -2560, 0), Time.deltaTime * 1.5F);
 	}
 
-	void InfoPanelUp()
+	public void InfoPanelUp()
 	{
 		swipeUp = true;
 		swipeDown = false;
