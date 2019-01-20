@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 // Input.GetTouch example.
 //
@@ -16,10 +17,12 @@ public class TouchManager : MonoBehaviour
 
 	public bool isTouching;
 
+	public Text raycastText;
+
 	Touch touch;
 
-	public InformationPanelManager infoPanel;
-	public ImageTrackerManager imageTracker;
+	public InformationPanelManager infoPanelManager;
+	public ImageTrackerManager imageTrackerManager;
 
 	void Awake()
 	{
@@ -52,8 +55,36 @@ public class TouchManager : MonoBehaviour
 			
 			if (!isTouching) {
 				touch = Input.GetTouch (0);
-				infoPanel.InfoPanelDown ();
-				isTouching = true;
+
+				// Construct a ray from the current touch coordinates
+				Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+				RaycastHit hit;
+
+				// Create a particle if hit
+				if (Physics.Raycast(ray, out hit))
+				{
+					var gO = hit.collider.gameObject;
+
+					raycastText.text = "Hit something, don't know what!";
+
+					if (gO.tag == "ImageTarget")
+					{
+						if (gO.GetComponent<ImageTrackerConfig> () != null) 
+						{
+							//string text = gO.GetComponent<ImageTrackerConfig> ().trackerText;
+							raycastText.text = "Hit " + gO.GetComponent<ImageTrackerConfig>().trackerText;
+
+
+							infoPanelManager.InfoPanelDown ();
+							isTouching = true;
+						}
+					}
+				}
+
+
+
+
+
 			}
 
 
@@ -85,6 +116,8 @@ public class TouchManager : MonoBehaviour
 		} else 
 		{
 			isTouching = false;
+			raycastText.text = "Finger off screen";
+
 		}
 	}
 
@@ -92,10 +125,19 @@ public class TouchManager : MonoBehaviour
 	{
 		while (Input.touchCount == 0 || (Input.touchCount > 0 && Input.GetTouch(0).phase != TouchPhase.Began))
 		{
-			infoPanel.InfoPanelDown ();
+			infoPanelManager.InfoPanelDown ();
 		}
 
 		yield return null;
+	}
+
+	void RaycastForward()
+	{
+//		// Construct a ray from the current touch coordinates
+//		Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
+//		// Create a particle if hit
+//		if (Physics.Raycast(ray))
+//			Instantiate(particle, transform.position, transform.rotation);   
 	}
 
 }
