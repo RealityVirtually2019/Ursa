@@ -47,10 +47,10 @@ public class InformationPanelManager : MonoBehaviour {
     void Start ()
     {
 
-          infoHide = true;
+        infoHide = true;
         infoShow = false;
 
-        transform.position = infoEndTransform.position;
+        //transform.position = infoEndTransform.position;
 
     }
 
