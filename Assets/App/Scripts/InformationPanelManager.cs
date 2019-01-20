@@ -52,14 +52,14 @@ public class InformationPanelManager : MonoBehaviour {
 		
 	}
 
-	void InfoPanelDown()
+	public void InfoPanelDown()
 	{
 		swipeDown = true;
 		swipeUp = false;
 		//transform.position = Vector3.Lerp(transform.position, new Vector3(0, -2560, 0), Time.deltaTime * 1.5F);
 	}
 
-	void InfoPanelUp()
+	public void InfoPanelUp()
 	{
 		swipeUp = true;
 		swipeDown = false;
