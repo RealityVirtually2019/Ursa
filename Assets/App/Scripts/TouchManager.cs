@@ -52,15 +52,18 @@ public class TouchManager : MonoBehaviour
 	{
 		// Handle screen touches.
 		if (Input.touchCount > 0) {
-			
-			if (!isTouching) {
+
+            //raycastText.text = "Finger on screen";
+
+            if (!isTouching)// && !infoPanelManager.infoShow)
+            {
 				touch = Input.GetTouch (0);
 
 				// Construct a ray from the current touch coordinates
 				Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
 				RaycastHit hit;
 
-				// Create a particle if hit
+                // if we hit something and we are not currently showing some information on screen
 				if (Physics.Raycast(ray, out hit))
 				{
 					var gO = hit.collider.gameObject;
@@ -74,8 +77,9 @@ public class TouchManager : MonoBehaviour
 							//string text = gO.GetComponent<ImageTrackerConfig> ().trackerText;
 							raycastText.text = "Hit " + gO.GetComponent<ImageTrackerConfig>().trackerText;
 
+                            infoPanelManager.ActivatePanel(raycastText.text);
+							infoPanelManager.InfoPanelShow ();
 
-							infoPanelManager.InfoPanelDown ();
 							isTouching = true;
 						}
 					}
@@ -125,7 +129,7 @@ public class TouchManager : MonoBehaviour
 	{
 		while (Input.touchCount == 0 || (Input.touchCount > 0 && Input.GetTouch(0).phase != TouchPhase.Began))
 		{
-			infoPanelManager.InfoPanelDown ();
+			infoPanelManager.InfoPanelShow ();
 		}
 
 		yield return null;

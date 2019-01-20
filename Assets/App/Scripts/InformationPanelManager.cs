@@ -1,69 +1,106 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
+public class Panel
+{
+    public GameObject panelObj;
+    public string panelName;
+}
+
 public class InformationPanelManager : MonoBehaviour {
 
-	public bool swipeDown;
-	public bool swipeUp;
+    public List<Panel> panels = new List<Panel>();
 
-	public Text yPos;
+	public bool infoShow;
+	public bool infoHide = true;
 
-	public Transform infoUp;
-	public Transform infoDown;
+	//public Text yPos;
+
+	public Transform infoStartTransform;
+	public Transform infoEndTransform;
 
 	void OnEnable()
 	{
-		SwipeDetector.SwipeDown += InfoPanelDown;
-		SwipeDetector.SwipeUp += InfoPanelUp;
-	}
+		//SwipeDetector.SwipeDown += InfoPanelShow;
+		//SwipeDetector.SwipeUp += InfoPanelHide;
+
+        SwipeDetector.SwipeRight += InfoPanelHide;
+
+    }
 
 	void OnDisable()
 	{
-		SwipeDetector.SwipeDown -= InfoPanelDown;
-		SwipeDetector.SwipeUp += InfoPanelUp;
+        //SwipeDetector.SwipeDown -= InfoPanelShow;
+        //SwipeDetector.SwipeUp += InfoPanelHide;
 
-	}
-		
+        SwipeDetector.SwipeRight -= InfoPanelHide;
 
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
 
-		if (swipeDown) 
+    }
+
+
+    // Use this for initialization
+    void Start ()
+    {
+
+          infoHide = true;
+        infoShow = false;
+
+        transform.position = infoEndTransform.position;
+
+    }
+
+    void Update () {
+
+		if (infoShow) 
 		{
-			transform.position = Vector3.Lerp(transform.position, infoDown.transform.position, Time.deltaTime * 1.5F);
+			transform.position = Vector3.Lerp(transform.position, infoEndTransform.transform.position, Time.deltaTime * 5F);
 			//transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, -1280, 0), Time.deltaTime * 1.5F);
 		}
 
-		if (swipeUp) 
+		if (infoHide) 
 		{
-			transform.position = Vector3.Lerp(transform.position, infoUp.transform.position, Time.deltaTime * 1.5F);
+			transform.position = Vector3.Lerp(transform.position, infoStartTransform.transform.position, Time.deltaTime * 5F);
 			//transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, 1280, 0), Time.deltaTime * 1.5F);
 
 		}
 
-		yPos.text = transform.position.y.ToString ();
+		//yPos.text = transform.position.y.ToString ();
 			
 		
 	}
 
-	public void InfoPanelDown()
+	public void InfoPanelShow()
 	{
-		swipeDown = true;
-		swipeUp = false;
+		infoShow = true;
+		infoHide = false;
 		//transform.position = Vector3.Lerp(transform.position, new Vector3(0, -2560, 0), Time.deltaTime * 1.5F);
 	}
 
-	public void InfoPanelUp()
+	public void InfoPanelHide()
 	{
-		swipeUp = true;
-		swipeDown = false;
+		infoHide = true;
+		infoShow = false;
 	}
+
+    public void ActivatePanel(string name)
+    {
+        foreach (var p in panels)
+        {
+            if (p.panelName == name)
+            {
+                p.panelObj.SetActive(true);
+            }
+            else
+            {
+                p.panelObj.SetActive(false);
+            }
+        }
+    }
+
+
 
 		
 		
